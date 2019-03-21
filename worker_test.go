@@ -37,6 +37,25 @@ func Example() {
 	// Jobs running: 0
 }
 
+func ExamplePanic() {
+	fmt.Println("panics are recovered")
+
+	pool := worker.Pool{
+		Recover: func(e interface{}) {
+			fmt.Println(e)
+		},
+	}
+
+	pool.Run(func() {
+		panic("error")
+	})
+
+	time.Sleep(1 * time.Second)
+
+	// Output: panics are recovered
+	// error
+}
+
 type mockJobs struct {
 	N int
 }

@@ -5,14 +5,25 @@ type Pool struct {
 		Inc()
 		Dec()
 	}
+	Recover func(interface{})
 }
 
 func (p *Pool) Run(fn func()) {
-	p.Jobs.Inc()
+	if p.Jobs != nil {
+		p.Jobs.Inc()
+	}
 
 	go func() {
+		defer func() {
+			e := recover()
+			if e != nil && p.Recover != nil {
+				p.Recover(e)
+			}
+		}()
 		fn()
 
-		p.Jobs.Dec()
+		if p.Jobs != nil {
+			p.Jobs.Dec()
+		}
 	}()
 }
