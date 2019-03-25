@@ -15,8 +15,8 @@ import (
 	"time"
 
 	// Include these!
-	"github.com/bcmi-labs/worker"
-	"github.com/bcmi-labs/worker/promworker"
+	"github.com/bcmi-labs/worker.go"
+	"github.com/bcmi-labs/worker.go/promworker"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
