@@ -1,14 +1,18 @@
 /*
-* Copyright 2018 ARDUINO SA (http://www.arduino.cc/)
-* This file is part of [insert application name].
-* Copyright (c) [insert year]
-* Authors: [insert authors]
+* Copyright 2019 ARDUINO SA (http://www.arduino.cc/)
+* This file is part of worker.go.
+* Copyright (c) 2019
+* Authors: Matteo "triex" Suppo
 *
 * This software is released under:
-* The GNU General Public License, which covers the main part of
-* [insert application name]
+* first, the GNU General Public License, which covers the main part of
+* worker.go
 * The terms of this license can be found at:
 * https://www.gnu.org/licenses/gpl-3.0.en.html
+*
+* next, the GNU Lesser General Public License that covers
+* worker.go. The terms of this license can be found at:
+* https://www.gnu.org/licenses/lgpl.html
 *
 * You can be released from the requirements of the above licenses by purchasing
 * a commercial license. Buying such a license is mandatory if you want to modify or
