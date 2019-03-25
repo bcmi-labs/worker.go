@@ -23,7 +23,7 @@ package promworker
 import (
 	"time"
 
-	"github.com/bcmi-labs/worker"
+	"github.com/bcmi-labs/worker.go"
 	"github.com/prometheus/client_golang/prometheus"
 )
 
