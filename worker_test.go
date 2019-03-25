@@ -28,7 +28,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/bcmi-labs/worker"
+	"github.com/bcmi-labs/worker.go"
 )
 
 func Example() {

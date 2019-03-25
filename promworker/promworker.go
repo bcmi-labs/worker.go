@@ -33,15 +33,27 @@ import (
 
 // New creates a worker.Pool backed by prometheus stats.
 // It will create and register:
-// - a {{prefix}}_jobs_count gauge keeping track of the number of jobs
+// - a {{prefix}}_jobs_count gauge keeping track of the number of jobs currently running
+// - a {{prefix}}_jobs_sum counter keeping track of the total number of jobs ran
 // - a {{prefix}}_trace_nanoseconds summary keeping track of the duration time of traces
 // You have to start the prometheus server yourself, though
 func New(prefix string) *worker.Pool {
-	jobs := prometheus.NewGauge(prometheus.GaugeOpts{
+	count := prometheus.NewGauge(prometheus.GaugeOpts{
 		Name: prefix + "_jobs_count",
 		Help: "The number of jobs currently running in the worker pool",
 	})
-	prometheus.MustRegister(jobs)
+	prometheus.MustRegister(count)
+
+	sum := prometheus.NewCounter(prometheus.CounterOpts{
+		Name: prefix + "_jobs_sum",
+		Help: "The number of jobs currently running in the worker pool",
+	})
+	prometheus.MustRegister(sum)
+
+	jobs := jobs{
+		count: count,
+		sum:   sum,
+	}
 
 	traces := prometheus.NewSummaryVec(prometheus.SummaryOpts{
 		Name:       prefix + "_trace_nanoseconds",
@@ -55,9 +67,23 @@ func New(prefix string) *worker.Pool {
 	}
 
 	return &worker.Pool{
-		Jobs:   jobs,
+		Jobs:   &jobs,
 		Tracer: &tracer,
 	}
+}
+
+type jobs struct {
+	count prometheus.Gauge
+	sum   prometheus.Counter
+}
+
+func (j *jobs) Inc() {
+	j.count.Inc()
+	j.sum.Inc()
+}
+
+func (j *jobs) Dec() {
+	j.count.Dec()
 }
 
 // Tracer keeps track of the duration of jobs launched with pool.RunTraced()

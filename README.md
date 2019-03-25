@@ -63,6 +63,12 @@ test_jobs_count 2
 ```
 
 ```
+# HELP test_jobs_sum The number of jobs processed since the start
+# TYPE test_jobs_sum counter
+test_jobs_sum 2
+```
+
+```
 # HELP test_trace_nanoseconds The duration in nanoseconds of arbitrary actions performed by jobs in the worker pool
 # TYPE test_trace_nanoseconds summary
 test_trace_nanoseconds{action="first action",scope="trace",quantile="0.5"} 1.0000253174e+10
